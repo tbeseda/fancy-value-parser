@@ -1,0 +1,35 @@
+{
+  "name": "fancy-value-parser",
+  "version": "0.0.0",
+  "description": "Parse fancy strings values to JS objects",
+  "author": "tbeseda",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "lint.fix": "npm run lint -- --fix",
+    "release": "release-it",
+    "test": "npm run lint && node --test"
+  },
+  "devDependencies": {
+    "@types/node": "^18.18.13",
+    "eslint": "^8.54.0",
+    "eslint-config-standard": "^17.1.0",
+    "release-it": "^17.0.0"
+  },
+  "eslintConfig": {
+    "extends": "standard",
+    "ignorePatterns": [],
+    "rules": {
+      "space-unary-ops": 0,
+      "comma-dangle": [
+        "error",
+        "always-multiline"
+      ]
+    }
+  }
+}
