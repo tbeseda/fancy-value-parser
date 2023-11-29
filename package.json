@@ -1,7 +1,7 @@
 {
   "name": "fancy-value-parser",
   "version": "0.0.0",
-  "description": "Parse fancy strings values to JS objects",
+  "description": "Parse fancy string values to JS objects",
   "author": "tbeseda",
   "license": "MIT",
   "type": "module",
