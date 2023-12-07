@@ -23,6 +23,7 @@ Helpful for parsing HTML attribute values in custom elements/web components.
 
 ## Not yet supported
 
+- key-value pairs like `foo:bar`
 - booleans
 - dates
 - floating point numbers

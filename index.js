@@ -24,6 +24,29 @@ export default function parseOption (option) {
   const firstChar = option.charAt(0)
   let type
   let value
+
+  if (option.includes(':')) {
+    const [k = null, v = null] = option.split(/:(.*)/s)
+    const parsedKey = k ? parseOption(k) : null
+    const parsedVal = v ? parseOption(v) : null
+
+    type = 'pair'
+    value = [parsedKey, parsedVal]
+
+    const pair = {}
+    const pairKey = parsedKey?.value || null
+    const pairVal = (parsedVal?.value?.value)
+      ? v || null
+      : parsedVal?.value || null
+    pair[pairKey] = pairVal
+
+    return {
+      type,
+      value,
+      ...pair,
+    }
+  }
+
   switch (firstChar) {
     case "'":
       type = 'string'

@@ -16,8 +16,8 @@
     "test": "npm run lint && node --test"
   },
   "devDependencies": {
-    "@types/node": "^18.18.13",
-    "eslint": "^8.54.0",
+    "@types/node": "^18.19.2",
+    "eslint": "^8.55.0",
     "eslint-config-standard": "^17.1.0",
     "release-it": "^17.0.0"
   },
