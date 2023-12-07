@@ -9,6 +9,8 @@ for (const { actual, expected } of [
   { actual: '42', expected: { type: 'number', value: 42 } },
   { actual: '1000', expected: { type: 'number', value: 1000 } },
   { actual: '42.666', expected: { type: 'number', value: 42 } },
+  { actual: 'true', expected: { type: 'boolean', value: true } },
+  { actual: 'false', expected: { type: 'boolean', value: false } },
   { actual: '2-4', expected: { type: 'range', value: [2, 4] } },
   { actual: '5-', expected: { type: 'range', value: [5, null] } },
   { actual: '6-66', expected: { type: 'range', value: [6, 66] } },

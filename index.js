@@ -2,6 +2,7 @@ export const T = {
   string: 'string',
   regex: 'regex',
   number: 'number',
+  boolean: 'boolean',
   range: 'range',
   pair: 'pair',
   set: 'set',
@@ -28,7 +29,6 @@ export default function parseOption (option) {
     throw new TypeError(`Expected string, got ${typeof option}`)
   }
 
-  const firstChar = option.charAt(0)
   let type
   let value
 
@@ -65,6 +65,19 @@ export default function parseOption (option) {
     }
   }
 
+  if (option === 'true') {
+    type = T.boolean
+    value = true
+    return { type, value }
+  }
+
+  if (option === 'false') {
+    type = T.boolean
+    value = false
+    return { type, value }
+  }
+
+  const firstChar = option.charAt(0)
   switch (firstChar) {
     case "'":
       type = T.string
