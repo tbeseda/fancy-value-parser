@@ -10,23 +10,20 @@ export const T = {
 
 /**
  * @param {string} option
+ * option is a string representation of:
+ * ╰─ a string "'string'",
+ * ╰─ a number "42",
+ * ╰─ a number range "6-66",
+ * ╰─ a regex "/regex/",
+ * ╰─ an unknown value "foo",
+ * ╰─ or a set of values "{}"
+ * a set can be
+ * ╰─ a single value "{2}"
+ * ╰─ or a (janky) comma separated list of values:
+ *   ╰─ "{/foo/,1 ,'str ings', 5-7 }"
  * @returns {Record<string, any>}
  */
 export default function parseOption (option) {
-  /*
-    option is a string representation of:
-    ╰─ a string "'string'",
-    ╰─ a number "42",
-    ╰─ a number range "6-66",
-    ╰─ a regex "/regex/",
-    ╰─ an unknown value "foo",
-    ╰─ or a set of values "{}"
-    a set can be
-    ╰─ a single value "{2}"
-    ╰─ or a (janky) comma separated list of values:
-       ╰─ "{/foo/,1 ,'str ings', 5-7 }"
-   */
-
   if (typeof option !== 'string') {
     throw new TypeError(`Expected string, got ${typeof option}`)
   }
