@@ -1,3 +1,13 @@
+export const T = {
+  string: 'string',
+  regex: 'regex',
+  number: 'number',
+  range: 'range',
+  pair: 'pair',
+  set: 'set',
+  null: null,
+}
+
 /**
  * @param {string} option
  * @returns {Record<string, any>}
@@ -25,6 +35,7 @@ export default function parseOption (option) {
   let type
   let value
 
+  // pairs always handled first
   if (option.includes(':')) {
     const [k = null, v = null] = option.split(/:(.*)/s)
     const parsedKey = k ? parseOption(k) : null
@@ -33,31 +44,41 @@ export default function parseOption (option) {
     type = 'pair'
     value = [parsedKey, parsedVal]
 
-    const pair = {}
-    const pairKey = parsedKey?.value || null
-    const pairVal = (parsedVal?.value?.value)
-      ? v || null
-      : parsedVal?.value || null
-    pair[pairKey] = pairVal
+    let pairKey = null
+    if (parsedKey) {
+      if ([T.number, T.string].includes(parsedKey.type)) {
+        pairKey = parsedKey.value
+      } else {
+        pairKey = k
+      }
+    }
+    let pairVal = null
+    if (parsedVal) {
+      if ([T.number, T.string, T.regex].includes(parsedVal.type)) {
+        pairVal = parsedVal.value
+      } else {
+        pairVal = v
+      }
+    }
 
     return {
       type,
       value,
-      ...pair,
+      [pairKey]: pairVal,
     }
   }
 
   switch (firstChar) {
     case "'":
-      type = 'string'
+      type = T.string
       value = option.substring(1, option.length - 1)
       break
     case '/':
-      type = 'regex'
+      type = T.regex
       value = new RegExp(option.substring(1, option.length - 1))
       break
     case '{':
-      type = 'set'
+      type = T.set
       value = option.substring(1, option.length - 1)
         .split(',')
         .map(item => item.trim())
@@ -66,14 +87,14 @@ export default function parseOption (option) {
     default: {
       const n = Number(firstChar)
       if (isNaN(n)) {
-        type = null // untyped is fine
+        type = T.null // untyped is fine
         value = option
       } else if (option.includes('-')) {
         const [start, end] = option.split('-')
-        type = 'range'
+        type = T.range
         value = [parseInt(start), parseInt(end) || null]
       } else {
-        type = 'number'
+        type = T.number
         value = parseInt(option)
       }
       break

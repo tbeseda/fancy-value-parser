@@ -44,28 +44,6 @@ for (const { actual, expected } of [
     },
   },
   {
-    actual: "'foobar':42",
-    expected: {
-      type: 'pair',
-      value: [
-        { type: 'string', value: 'foobar' },
-        { type: 'number', value: 42 },
-      ],
-      foobar: 42,
-    },
-  },
-  {
-    actual: '666:/baz/',
-    expected: {
-      type: 'pair',
-      value: [
-        { type: 'number', value: 666 },
-        { type: 'regex', value: /baz/ },
-      ],
-      666: /baz/,
-    },
-  },
-  {
     actual: 'foo:',
     expected: {
       type: 'pair',
@@ -88,6 +66,39 @@ for (const { actual, expected } of [
     },
   },
   {
+    actual: "'foobar':42",
+    expected: {
+      type: 'pair',
+      value: [
+        { type: 'string', value: 'foobar' },
+        { type: 'number', value: 42 },
+      ],
+      foobar: 42,
+    },
+  },
+  {
+    actual: '666:/baz/',
+    expected: {
+      type: 'pair',
+      value: [
+        { type: 'number', value: 666 },
+        { type: 'regex', value: /baz/ },
+      ],
+      666: /baz/,
+    },
+  },
+  {
+    actual: '/baz/:6-66',
+    expected: {
+      type: 'pair',
+      value: [
+        { type: 'regex', value: /baz/ },
+        { type: 'range', value: [6, 66] },
+      ],
+      '/baz/': '6-66',
+    },
+  },
+  {
     actual: 'foo:bar:baz',
     expected: {
       type: 'pair',
@@ -105,47 +116,63 @@ for (const { actual, expected } of [
       foo: 'bar:baz',
     },
   },
-  // {
-  //   actual: "'foo':42:/baz/",
-  //   expected: {
-  //     type: 'pair',
-  //     value: [
-  //       { type: 'string', value: 'foo' },
-  //       {
-  //         type: 'pair',
-  //         value: [
-  //           { type: 'number', value: 42 },
-  //           { type: 'regex', value: /baz/ },
-  //         ],
-  //         42: /baz/,
-  //       },
-  //     ],
-  //     foo: '42:/baz/',
-  //   },
-  // },
   {
-    actual: 'foo:bar:baz:qux',
+    actual: "42:6-66:'foo bar':/baz/",
+    expected: {
+      type: 'pair',
+      value: [
+        { type: 'number', value: 42 },
+        {
+          type: 'pair',
+          value: [
+            { type: 'range', value: [6, 66] },
+            {
+              type: 'pair',
+              value: [
+                { type: 'string', value: 'foo bar' },
+                { type: 'regex', value: /baz/ },
+              ],
+              'foo bar': /baz/,
+            },
+          ],
+          '6-66': "'foo bar':/baz/",
+        },
+      ],
+      42: "6-66:'foo bar':/baz/",
+    },
+  },
+  {
+    actual: 'foo:{bar,baz}',
     expected: {
       type: 'pair',
       value: [
         { type: null, value: 'foo' },
         {
-          type: 'pair',
+          type: 'set',
           value: [
             { type: null, value: 'bar' },
-            {
-              type: 'pair',
-              value: [
-                { type: null, value: 'baz' },
-                { type: null, value: 'qux' },
-              ],
-              baz: 'qux',
-            },
+            { type: null, value: 'baz' },
           ],
-          bar: 'baz:qux',
         },
       ],
-      foo: 'bar:baz:qux',
+      foo: '{bar,baz}',
+    },
+  },
+  {
+    actual: '{foobar,baz}:qux',
+    expected: {
+      type: 'pair',
+      value: [
+        {
+          type: 'set',
+          value: [
+            { type: null, value: 'foobar' },
+            { type: null, value: 'baz' },
+          ],
+        },
+        { type: null, value: 'qux' },
+      ],
+      '{foobar,baz}': 'qux',
     },
   },
 ]) {
