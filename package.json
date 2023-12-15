@@ -19,6 +19,7 @@
     "@types/node": "^18.19.2",
     "eslint": "^8.55.0",
     "eslint-config-standard": "^17.1.0",
+    "print-adjacent": "^1.0.1",
     "release-it": "^17.0.0"
   },
   "eslintConfig": {
