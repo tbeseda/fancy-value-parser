@@ -32,15 +32,13 @@ parseOption('{foo,bar}') // { type: 'set', value: [{⋯}, {⋯}] }
 | `3-5` | `{ type: 'range', value: [3, 5] }` |
 | `true` | `{ type: 'boolean', value: true }` |
 | `foo:bar` | `{ type: 'pair', foo: 'bar', value: [{⋯}, {⋯}] }` |
-| `{1, /no[pe]/, 'foo'}` | `{ type: 'set', value: [{⋯}, {⋯}, {⋯}] }` |
+| `{1, /no[pe]/, foo:bar}` | `{ type: 'set', value: [{⋯}, {⋯}, {⋯}] }` |
 
-Yes, various types can be combined with pairs and sets:
+### Notes
 
-```
-42:/baz/:{6-66:{qux, 'foo bar', false}}
-```
-
-I have no idea why you'd want this, but it's possible!
+- Various types can be combined with simple pairs and sets.
+- Pairs are read left-to-right.
+- Sets cannot contain other sets.
 
 ## Not yet supported
 

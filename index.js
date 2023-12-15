@@ -32,7 +32,30 @@ export default function parseOption (option) {
   let type
   let value
 
-  // pairs always handled first
+  if (option === 'true') {
+    type = T.boolean
+    value = true
+    return { type, value }
+  }
+
+  if (option === 'false') {
+    type = T.boolean
+    value = false
+    return { type, value }
+  }
+
+  const firstChar = option.charAt(0)
+  const lastChar = option.charAt(option.length - 1)
+
+  if (firstChar === '{' && lastChar === '}') {
+    type = T.set
+    value = option.substring(1, option.length - 1)
+      .split(',')
+      .map(item => item.trim())
+      .map(parseOption)
+    return { type, value }
+  }
+
   if (option.includes(':')) {
     const [k = null, v = null] = option.split(/:(.*)/s)
     const parsedKey = k ? parseOption(k) : null
@@ -64,20 +87,6 @@ export default function parseOption (option) {
       [pairKey]: pairVal,
     }
   }
-
-  if (option === 'true') {
-    type = T.boolean
-    value = true
-    return { type, value }
-  }
-
-  if (option === 'false') {
-    type = T.boolean
-    value = false
-    return { type, value }
-  }
-
-  const firstChar = option.charAt(0)
   switch (firstChar) {
     case "'":
       type = T.string

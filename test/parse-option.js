@@ -144,6 +144,23 @@ for (const { actual, expected } of [
     },
   },
   {
+    actual: '{foo,bar:baz}',
+    expected: {
+      type: 'set',
+      value: [
+        { type: null, value: 'foo' },
+        {
+          type: 'pair',
+          value: [
+            { type: null, value: 'bar' },
+            { type: null, value: 'baz' },
+          ],
+          bar: 'baz',
+        },
+      ],
+    },
+  },
+  {
     actual: 'foo:{bar,baz}',
     expected: {
       type: 'pair',
